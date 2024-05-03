@@ -20,12 +20,7 @@ export default function InputField({
       type: inputData.type === "password" ? "text" : "password",
     });
   };
-  const hidePasswrod = () => {
-    setInputData({
-      ...inputData,
-      type: "password",
-    });
-  };
+
   const [type, setType] = useState(null);
   const fieldValue = watch(inputData.id);
 

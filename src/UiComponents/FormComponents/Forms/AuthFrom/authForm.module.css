@@ -1,5 +1,7 @@
 .auth_form {
     width: 100%;
+    height: fit-content;
+    margin: auto;
     @media (min-width: 640px) {
         max-width: 400px;
     }

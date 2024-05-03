@@ -1,2 +1,2 @@
-export const pageUrl = "http://localhost:3000";
+export const pageUrl = process.env.NEXT_PUBLIC_URL;
 export const apiUrl = pageUrl + "/api/";

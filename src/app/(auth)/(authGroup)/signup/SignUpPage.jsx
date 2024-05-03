@@ -1,10 +1,10 @@
 "use client";
 import { signupInputs } from "./data";
-import { handleRequestSubmit } from "../../../helpers/functions/handleSubmit";
-import { pageUrl } from "../../../Urls/urls";
+import { handleRequestSubmit } from "../../../../helpers/functions/handleSubmit";
+import { pageUrl } from "../../../../Urls/urls";
 import Link from "next/link";
-import { useToastContext } from "../../../Contexts/ToastLoading/ToastLoadingProvider";
-import { useAuth } from "../../../Contexts/Auth/AuthProvider";
+import { useToastContext } from "../../../../Contexts/ToastLoading/ToastLoadingProvider";
+import { useAuth } from "../../../../Contexts/Auth/AuthProvider";
 import AuthForm from "@/UiComponents/FormComponents/Forms/AuthFrom/AuthForm";
 
 export default function SignUpPage() {
@@ -26,7 +26,7 @@ export default function SignUpPage() {
     <Link href={pageUrl + "/login"}>Already have an account?</Link>
   );
   return (
-    <div>
+    <>
       <AuthForm
         btnText={"Sign up "}
         inputs={signupInputs}
@@ -34,6 +34,6 @@ export default function SignUpPage() {
         onSubmit={handleSignUp}
         subTitle={subTitle}
       />
-    </div>
+    </>
   );
 }
