@@ -1,0 +1,167 @@
+datasource db {
+  provider          = "postgresql"
+  url               = env("DATABASE_URL")
+  directUrl         = env("DIRECT_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum Role {
+  STUDENT
+  INSTRUCTOR
+  ADMIN
+}
+
+model Category {
+  id      Int      @id @default(autoincrement())
+  name    String   @unique
+  courses Course[]
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  firstName String
+  lastName  String
+  email     String   @unique
+  password  String
+  role      Role
+  isBlocked  Boolean @default(false)
+  isApprovedInstructor Boolean @default(false)
+  courses   Course[] @relation("UserCourses")
+  purchasedCourses Course[] @relation("PurchasedCourses")
+  favorites Course[] @relation("FavoriteCourses")
+  teaching  Course[] @relation("CoursesTaught")
+  reviews   Review[]
+  progress  CourseProgress[]
+  photo     String?
+  quizAttempts QuizAttempt[]
+  resetPasswordToken  String?  @unique
+  resetPasswordExpires DateTime?
+  confirmationToken String?  @unique
+  confirmationExpires DateTime?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?
+  emailConfirmed Boolean @default(false)
+  certificates   Certificate[]
+  userLessons UserLesson[]
+  userQuizzes UserQuiz[]
+}
+
+
+model Course {
+  id              Int      @id @default(autoincrement())
+  title           String
+  description     String
+  learningOutcomes String[]
+  category        Category @relation(fields: [categoryId], references: [id])
+  categoryId      Int
+  lessons         Lesson[]
+  students        User[]   @relation("UserCourses")
+  favorites       User[]   @relation("FavoriteCourses")
+  teacher         User     @relation(fields: [teacherId], references: [id], name: "CoursesTaught")
+  teacherId       Int
+  progress        CourseProgress[]
+  isPublished     Boolean
+  price           Float
+  isFree          Boolean
+  rating          Float
+  reviews         Review[]
+  quizzes         QuizContent[]
+  photo           String?
+  purchasedByUsers User[] @relation("PurchasedCourses")
+  certificate   Certificate?
+}
+model Lesson {
+  id           Int      @id @default(autoincrement())
+  title        String
+  description  String
+  videoLink    String?
+  pdfLink      String?
+  isFree       Boolean
+  course       Course   @relation(fields: [courseId], references: [id])
+  courseId     Int
+  duration     Int
+  completed    Boolean  @default(false)
+  order        Int
+  userLessons UserLesson[]
+}
+
+model UserLesson {
+  id        Int      @id @default(autoincrement())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    Int
+  lesson    Lesson   @relation(fields: [lessonId], references: [id])
+  lessonId  Int
+  completed Boolean  @default(false)
+}
+
+model Certificate {
+  id        Int      @id @default(autoincrement())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    Int
+  createdAt DateTime @default(now())
+  course    Course   @relation(fields: [courseId], references: [id])
+  courseId  Int      @unique
+}
+
+model QuizContent {
+  id        Int      @id @default(autoincrement())
+  course    Course   @relation(fields: [courseId], references: [id])
+  courseId  Int
+  questions Question[]
+  attempts  QuizAttempt[]
+  completed Boolean  @default(false)
+  userQuizzes UserQuiz[]
+}
+
+model Question {
+  id        Int      @id @default(autoincrement())
+  question  String
+  answers   Json
+  correctAnswer String
+  order     Int
+  quiz      QuizContent @relation(fields: [quizId], references: [id])
+  quizId    Int
+}
+
+model QuizAttempt {
+  id        Int      @id @default(autoincrement())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    Int
+  quiz      QuizContent @relation(fields: [quizId], references: [id])
+  quizId    Int
+  answers   Json
+  score     Int?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Review {
+  id        Int      @id @default(autoincrement())
+  rating    Int
+  user      User     @relation(fields: [userId], references: [id])
+  userId    Int
+  course    Course   @relation(fields: [courseId], references: [id])
+  courseId  Int
+}
+
+model CourseProgress {
+  id        Int      @id @default(autoincrement())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    Int
+  course    Course   @relation(fields: [courseId], references: [id])
+  courseId  Int
+  progress  Float    @default(0)
+}
+
+model UserQuiz {
+  id        Int      @id @default(autoincrement())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    Int
+  quiz      QuizContent @relation(fields: [quizId], references: [id])
+  quizId    Int
+  completed Boolean  @default(false)
+}
