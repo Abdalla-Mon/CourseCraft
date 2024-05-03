@@ -14,7 +14,7 @@ export default function HandleAuth({ children }) {
 
   return (
     <>
-      <div className=" fixed top-0 left-0 w-full h-full z-50  flex justify-center items-center bg-gray-50 p-3">
+      <div className={"flex bg-gray-50 p-3  w-full h-full min-h-screen"}>
         {children}
       </div>
     </>

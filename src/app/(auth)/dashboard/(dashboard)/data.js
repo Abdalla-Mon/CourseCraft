@@ -3,7 +3,7 @@ export const data = [
   {
     id: 8,
     text: "My Courses",
-    href: "/dashboard/courses",
+    href: "/dashboard",
     role: ["instructor"],
   },
   {

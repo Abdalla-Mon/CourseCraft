@@ -1,9 +1,9 @@
 "use client";
-import { handleRequestSubmit } from "../../../helpers/functions/handleSubmit";
+import { handleRequestSubmit } from "../../../../helpers/functions/handleSubmit";
 import Link from "next/link";
-import { pageUrl } from "../../../Urls/urls";
-import { useAuth } from "../../../Contexts/Auth/AuthProvider";
-import { useToastContext } from "../../../Contexts/ToastLoading/ToastLoadingProvider";
+import { pageUrl } from "../../../../Urls/urls";
+import { useAuth } from "../../../../Contexts/Auth/AuthProvider";
+import { useToastContext } from "../../../../Contexts/ToastLoading/ToastLoadingProvider";
 import { loginInputs } from "./data";
 import AuthForm from "@/UiComponents/FormComponents/Forms/AuthFrom/AuthForm";
 

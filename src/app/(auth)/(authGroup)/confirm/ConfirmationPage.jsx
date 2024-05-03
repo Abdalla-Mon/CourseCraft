@@ -1,8 +1,8 @@
 "use client";
 import { useEffect } from "react";
-import { handleRequestSubmit } from "../../../helpers/functions/handleSubmit";
-import { useAuth } from "../../../Contexts/Auth/AuthProvider";
-import { useToastContext } from "../../../Contexts/ToastLoading/ToastLoadingProvider";
+import { handleRequestSubmit } from "../../../../helpers/functions/handleSubmit";
+import { useAuth } from "../../../../Contexts/Auth/AuthProvider";
+import { useToastContext } from "../../../../Contexts/ToastLoading/ToastLoadingProvider";
 
 export default function ConfirmationPage({ token }) {
   const { setLoading } = useToastContext();

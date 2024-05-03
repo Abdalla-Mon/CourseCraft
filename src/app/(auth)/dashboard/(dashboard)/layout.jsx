@@ -3,7 +3,6 @@
 import HandleAuth from "./HandleAuth";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import ParamsLoadingProvider from "../../../../Contexts/ParamsLoadingProvider/ParamsLoadingProvider";
 import { toast } from "react-toastify";
 import {
   Failed,
@@ -40,16 +39,8 @@ export default function Layout({ children, instructor, student }) {
   const role = res?.role;
 
   return (
-    <ParamsLoadingProvider data={res}>
-      <div className={"min-h-screen "}>
-        <HandleAuth>
-          {role === "INSTRUCTOR"
-            ? instructor
-            : role === "STUDENT"
-              ? student
-              : null}{" "}
-        </HandleAuth>
-      </div>
-    </ParamsLoadingProvider>
+    <HandleAuth>
+      {role === "INSTRUCTOR" ? instructor : role === "STUDENT" ? student : null}{" "}
+    </HandleAuth>
   );
 }
