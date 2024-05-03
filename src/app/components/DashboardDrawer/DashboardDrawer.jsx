@@ -1,4 +1,5 @@
 import {
+  Button,
   Drawer,
   List,
   ListItem,
@@ -12,15 +13,24 @@ import { useAuth } from "../../../Contexts/Auth/AuthProvider";
 import { handleRequestSubmit } from "../../../helpers/functions/handleSubmit";
 import Image from "next/image";
 import * as React from "react";
+import { useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
+import { GiHamburgerMenu } from "react-icons/gi";
+import IconButton from "@mui/material/IconButton";
 
-export default function DashboardDrawer({ open, setOpen, listData }) {
+export default function DashboardDrawer({ listData }) {
+  const [open, setOpen] = useState(false);
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
   };
 
   return (
-    <div className={""}>
+    <div className={"block lg:hidden"}>
+      <Button onClick={toggleDrawer(true)} className={"fixed"}>
+        <IconButton>
+          <GiHamburgerMenu size={30} />
+        </IconButton>
+      </Button>
       <Drawer open={open} onClose={toggleDrawer(false)}>
         <DrawerList data={listData} toggleDrawer={toggleDrawer} />
       </Drawer>
@@ -33,7 +43,6 @@ export function DrawerList({ data, toggleDrawer }) {
   const { setRedirect } = useAuth();
   const pathName = usePathname();
   const router = useRouter();
-  console.log("what is the path name", pathName);
 
   async function handleLogout() {
     const signout = await handleRequestSubmit(
@@ -53,9 +62,7 @@ export function DrawerList({ data, toggleDrawer }) {
   return (
     <Box
       onClick={toggleDrawer && toggleDrawer(false)}
-      className={
-        " p-5 shadow-xl h-screen w-[250px] lg:w-[270px] xl:w-[300px] bg-white"
-      }
+      className={" p-5 lg:shadow-xl h-screen w-[300px] bg-white"}
     >
       <Link href={"/"}>
         <Image src="/logo.png" alt="Edu " width={160} height={160} />

@@ -21,6 +21,7 @@ export default function SelectField({
       variant={variant}
       sx={select.sx ? select.sx : { minWidth: 120 }}
       error={Boolean(errors[selectData.id])}
+      className={"mb-3"}
     >
       <InputLabel id={selectData.label}>{selectData.label}</InputLabel>
       <Select

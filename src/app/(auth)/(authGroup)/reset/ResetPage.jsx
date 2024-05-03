@@ -1,10 +1,10 @@
 "use client";
-import { handleRequestSubmit } from "../../../helpers/functions/handleSubmit";
+import { handleRequestSubmit } from "../../../../helpers/functions/handleSubmit";
 import { resetInputs, resetPasswordInputs } from "./data";
 import Link from "next/link";
-import { pageUrl } from "../../../Urls/urls";
-import { useToastContext } from "../../../Contexts/ToastLoading/ToastLoadingProvider";
-import { useAuth } from "../../../Contexts/Auth/AuthProvider";
+import { pageUrl } from "../../../../Urls/urls";
+import { useToastContext } from "../../../../Contexts/ToastLoading/ToastLoadingProvider";
+import { useAuth } from "../../../../Contexts/Auth/AuthProvider";
 import { useRouter } from "next/navigation";
 import AuthForm from "@/UiComponents/FormComponents/Forms/AuthFrom/AuthForm";
 
