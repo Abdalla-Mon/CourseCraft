@@ -14,7 +14,7 @@ export async function POST(request, { params }) {
       status: 500,
     });
   try {
-    const user = await prisma.user.findUnique({
+    const user = await prisma.User.findUnique({
       where: {
         confirmationToken: confirmationToken,
       },
@@ -26,7 +26,13 @@ export async function POST(request, { params }) {
         status: 500,
       });
     }
-    await prisma.user.update({
+    if (user.emailConfirmed) {
+      return Response.json({
+        message: "Email has already been confirmed",
+        status: 400,
+      });
+    }
+    await prisma.User.update({
       where: {
         confirmationToken: confirmationToken,
       },

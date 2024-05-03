@@ -76,11 +76,39 @@ export const createCourseInputs = [
       label: "Price",
       name: "price",
     },
-
+    sx: {
+      width: "100%",
+      "@media (min-width:600px)": {
+        width: "49%",
+        mr: "2%",
+      },
+    },
     pattern: {
       required: {
         value: true,
         message: "Please enter a price",
+      },
+    },
+  },
+  {
+    data: {
+      id: "duration",
+      type: "number",
+      label: "Duration",
+      name: "duration",
+      helperText:
+        "Expected duration of the course in hours you can modify it later",
+    },
+    sx: {
+      width: "100%",
+      "@media (min-width:600px)": {
+        width: "49%",
+      },
+    },
+    pattern: {
+      required: {
+        value: true,
+        message: "Please enter a duration",
       },
     },
   },
@@ -93,6 +121,7 @@ export const createCourseInputs = [
       helperText:
         "Note: Each learning outcome should be on a new line (press Enter after each learning outcome).",
     },
+
     pattern: {
       required: {
         value: true,

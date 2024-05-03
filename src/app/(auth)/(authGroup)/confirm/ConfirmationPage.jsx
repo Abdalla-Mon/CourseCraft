@@ -3,18 +3,20 @@ import { useEffect } from "react";
 import { handleRequestSubmit } from "../../../../helpers/functions/handleSubmit";
 import { useAuth } from "../../../../Contexts/Auth/AuthProvider";
 import { useToastContext } from "../../../../Contexts/ToastLoading/ToastLoadingProvider";
+import { useRouter } from "next/navigation";
 
 export default function ConfirmationPage({ token }) {
   const { setLoading } = useToastContext();
-  const { isLoggedIn, setRedirect, redirect } = useAuth();
-  // if (isLoggedIn) return "You are already logged in";
+  const { isLoggedIn, redirect, emailConfirmed, setRedirect } = useAuth();
+  const router = useRouter();
   useEffect(() => {
     async function handleConfirmation() {
-      if (redirect) {
-        // router.pus
-      }
       if (redirect) return;
-      const response = await handleRequestSubmit(
+      if (isLoggedIn && emailConfirmed) {
+        router.push("/dashboard/");
+        return;
+      }
+      const res = await handleRequestSubmit(
         {},
         setLoading,
         `auth/confirm/${token}`,
@@ -22,11 +24,9 @@ export default function ConfirmationPage({ token }) {
         "Confirming...",
         setRedirect,
       );
-      console.log(response);
-      // if (response.redirect) {
-      //   setRedirect(true);
-      //   // router.push(response.user.role.toLowerCase());
-      // }
+      if (res.status === 200) {
+        router.push("/dashboard/");
+      }
     }
 
     handleConfirmation();
