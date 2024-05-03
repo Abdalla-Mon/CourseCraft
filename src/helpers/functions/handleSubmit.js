@@ -24,7 +24,9 @@ export async function handleRequestSubmit(
     const response = await request.json();
     if (response.status === 200) {
       await toast.update(id, Success(response.message));
-      setRedirect((prev) => !prev);
+      if (setRedirect) {
+        setRedirect((prev) => !prev);
+      }
     } else {
       toast.update(id, Failed(response.message));
     }

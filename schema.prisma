@@ -55,24 +55,28 @@ model Course {
   id              Int      @id @default(autoincrement())
   title           String
   description     String
-  learningOutcomes String[]
+  learningOutcomes String
   category        Category @relation(fields: [categoryId], references: [id])
   categoryId      Int
   lessons         Lesson[]
   students        User[]   @relation("UserCourses")
   favorites       User[]   @relation("FavoriteCourses")
-  teacher         User     @relation(fields: [teacherId], references: [id], name: "CoursesTaught")
-  teacherId       Int
+  instructor         User     @relation(fields: [instructorId], references: [id], name: "CoursesTaught")
+  instructorId       Int
   progress        CourseProgress[]
-  isPublished     Boolean
+  isPublished     Boolean @default(false)
+  isFree          Boolean @default(false)
   price           Float
-  isFree          Boolean
-  rating          Float
+  rating          Float    @default(0)
   reviews         Review[]
   quizzes         QuizContent[]
   photo           String?
+  photoId   String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
   purchasedByUsers User[] @relation("PurchasedCourses")
   certificate   Certificate?
+  duration        Int
 }
 model Lesson {
   id           Int      @id @default(autoincrement())
