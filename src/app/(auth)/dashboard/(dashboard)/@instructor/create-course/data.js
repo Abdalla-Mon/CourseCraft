@@ -26,20 +26,7 @@ export const createCourseInputs = [
       type: "select",
       label: "Category",
       name: "category",
-      options: [
-        {
-          value: "1",
-          label: "Category 1",
-        },
-        {
-          value: "2",
-          label: "Category 2",
-        },
-        {
-          value: "3",
-          label: "Category 3",
-        },
-      ],
+      options: "",
     },
     sx: {
       width: "100%",

@@ -4,10 +4,36 @@ import { createCourseInputs } from "@/app/(auth)/dashboard/(dashboard)/@instruct
 import { handleRequestSubmit } from "@/helpers/functions/handleSubmit";
 import { useToastContext } from "@/Contexts/ToastLoading/ToastLoadingProvider";
 import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+
+async function getCategories() {
+  let categories = await fetch("/api/courses/categories").then((res) =>
+    res.json(),
+  );
+  categories = await categories.categories;
+  categories = categories.map((category) => {
+    return {
+      value: category.id,
+      label: category.name,
+    };
+  });
+  return categories;
+}
 
 export default function CreateCourse() {
   const { setLoading } = useToastContext();
   let { data: instructorData } = useSelector((state) => state.auth);
+  const [inputs, setInputs] = useState([]);
+
+  useEffect(() => {
+    async function createInputs() {
+      const categories = await getCategories();
+      createCourseInputs[1].data.options = categories;
+      setInputs(createCourseInputs);
+    }
+
+    createInputs();
+  }, []);
 
   async function createCourse(data) {
     const file = data.courseImage[0];
@@ -29,15 +55,15 @@ export default function CreateCourse() {
       true,
       "Creating Course...",
     );
-    console.log(req);
-    // #todo handle post req
     // #todo handle redirect to create course lessons
   }
 
+  if (inputs.length === 0)
+    return <div>Please wait fetching course categories</div>;
   return (
     <div className="py-5 pr-5">
       <MainForm
-        inputs={createCourseInputs}
+        inputs={inputs}
         onSubmit={createCourse}
         formTitle={"Create Course"}
         subTitle={
