@@ -1,5 +1,5 @@
-import ToastContainerLocal from "@/UiComponents/ToastContainerLocal/ToastContainerLocal";
 import "react-toastify/dist/ReactToastify.css";
+import ToastContainerLocal from "@/app/UiComponents/Feedback/ToastContainerLocal/ToastContainerLocal";
 
 export function DisplayLoadingAndErrors({ loading }) {
   return (

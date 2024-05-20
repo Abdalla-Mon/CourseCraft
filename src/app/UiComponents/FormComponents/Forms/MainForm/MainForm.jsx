@@ -3,9 +3,9 @@ import InputField from "../../Inputs/InputField";
 import { useForm } from "react-hook-form";
 import SelectField from "../../Inputs/SelectField";
 import { Button, Typography } from "@mui/material";
-import SwitchInput from "@/UiComponents/FormComponents/Inputs/SwitchField";
-import TextAreaField from "@/UiComponents/FormComponents/Inputs/TextAreaFiels";
-import ImageField from "@/UiComponents/FormComponents/Inputs/FileField";
+import SwitchInput from "@/app/UiComponents/FormComponents/Inputs/SwitchField";
+import TextAreaField from "@/app/UiComponents/FormComponents/Inputs/TextAreaFiels";
+import ImageField from "@/app/UiComponents/FormComponents/Inputs/FileField";
 
 export default function MainForm({
   inputs,
@@ -18,10 +18,15 @@ export default function MainForm({
   variant,
   children,
   _className,
+  loading,
+  getSelectData,
+  setLoading,
 }) {
   const { formState, register, handleSubmit, watch, trigger, control } =
     useForm();
   const { errors } = formState;
+  const loadingValues = loading && Object.values(loading);
+  const isLoading = loadingValues?.includes(true);
   return (
     <form
       noValidate
@@ -58,6 +63,9 @@ export default function MainForm({
                 register={register}
                 errors={errors}
                 variant={variant}
+                getSelectData={getSelectData}
+                loading={loading}
+                setLoading={setLoading}
               />
             );
           } else if (input.data.type === "switch") {
@@ -116,6 +124,13 @@ export default function MainForm({
           size="large"
           color="primary"
           className={"mt-5 w-full  p-3 capitalize text-white font-bold"}
+          onClick={() => {
+            if (isLoading) return;
+          }}
+          sx={{
+            opacity: isLoading ? 0.5 : 1,
+            cursor: isLoading ? "not-allowed" : "pointer",
+          }}
         >
           {btnText}
         </Button>

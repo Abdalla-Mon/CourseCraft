@@ -1,5 +1,5 @@
 import { FormControl, FormHelperText, InputLabel, Select } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import MenuItem from "@mui/material/MenuItem";
 
 export default function SelectField({
@@ -7,15 +7,32 @@ export default function SelectField({
   variant = "filled",
   register,
   errors,
+  getSelectData,
+  loading,
+  setLoading,
 }) {
   const selectData = select.data;
-  const options = selectData.options;
+  const [options, setOptions] = useState([]);
+  useEffect(() => {
+    if (getSelectData) {
+      const getOptionsFunction = getSelectData[selectData.id];
+
+      async function getOptions() {
+        const options = await getOptionsFunction();
+        setOptions(options);
+        setLoading({ ...loading, [selectData.id]: false });
+      }
+
+      getOptions();
+    } else {
+      setOptions(selectData.options);
+    }
+  }, []);
   const [value, setValue] = useState("");
 
   const handleChange = (event) => {
     setValue(event.target.value);
   };
-
   return (
     <FormControl
       variant={variant}
@@ -30,13 +47,15 @@ export default function SelectField({
         value={value}
         onChange={handleChange}
       >
-        {options.map((item) => {
-          return (
-            <MenuItem value={item.value} key={item.label}>
-              {item.label}
-            </MenuItem>
-          );
-        })}
+        {loading[selectData.id] && <MenuItem>Loading...</MenuItem>}
+        {!loading[selectData.id] &&
+          options.map((item) => {
+            return (
+              <MenuItem value={item.value} key={item.label}>
+                {item.label}
+              </MenuItem>
+            );
+          })}
       </Select>
       <FormHelperText>{errors[selectData.id]?.message}</FormHelperText>
     </FormControl>

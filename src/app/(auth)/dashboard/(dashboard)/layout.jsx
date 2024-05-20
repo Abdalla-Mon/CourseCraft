@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 import {
   Failed,
   Success,
-} from "../../../../UiComponents/ToastUpdate/ToastUpdate";
+} from "@/app/UiComponents/Feedback/ToastUpdate/ToastUpdate";
 
 export default function Layout({ children, instructor, student }) {
   const [res, setRes] = useState(null);

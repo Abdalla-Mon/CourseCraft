@@ -1,5 +1,8 @@
 import { toast } from "react-toastify";
-import { Failed, Success } from "@/UiComponents/ToastUpdate/ToastUpdate";
+import {
+  Failed,
+  Success,
+} from "@/app/UiComponents/Feedback/ToastUpdate/ToastUpdate";
 import { apiUrl } from "@/Urls/urls";
 
 export async function handleRequestSubmit(

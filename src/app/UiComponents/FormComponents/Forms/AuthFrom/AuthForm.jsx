@@ -1,5 +1,5 @@
 import styles from "./authForm.module.css";
-import MainForm from "@/UiComponents/FormComponents/Forms/MainForm/MainForm";
+import MainForm from "@/app/UiComponents/FormComponents/Forms/MainForm/MainForm";
 
 export default function AuthForm({
   inputs,

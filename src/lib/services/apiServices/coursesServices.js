@@ -1,6 +1,31 @@
 import { supaBase } from "@/lib/supabase/supabase";
 import prisma from "@/lib/pirsma/prisma";
 
+export async function getInstructorCourses(page, limit, instructorId) {
+  const skip = (page - 1) * limit;
+
+  const courses = await prisma.Course.findMany({
+    where: {
+      instructorId: instructorId,
+    },
+    skip: skip,
+    take: limit,
+    include: {
+      category: true,
+    },
+  });
+
+  const total = await prisma.Course.count({
+    where: {
+      instructorId: instructorId,
+    },
+  });
+  return {
+    data: courses,
+    total: total,
+  };
+}
+
 export async function createCourse(data) {
   const { courseImage } = data;
   const photoId = Date.now().toString();
