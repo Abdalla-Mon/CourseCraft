@@ -18,7 +18,7 @@ export default function HandleAuth({ children }) {
   return (
     <>
       <div className={"min-h-screen"}>
-        <section className={"flex gap-5 w-full "}>
+        <section className={"flex lg:gap-5 w-full "}>
           <div className={"w-auto hidden lg:block"}>
             <DrawerList data={drawerData} />
           </div>
@@ -27,7 +27,13 @@ export default function HandleAuth({ children }) {
             setOpen={setOpen}
             listData={drawerData}
           />
-          <div className={"flex-1 lg:pt-10"}>{children}</div>
+          <div
+            className={
+              "flex-1 lg:pt-10 max-w-full lg:max-w-[calc(100%-340px)] w-full"
+            }
+          >
+            {children}
+          </div>
         </section>
       </div>
     </>
